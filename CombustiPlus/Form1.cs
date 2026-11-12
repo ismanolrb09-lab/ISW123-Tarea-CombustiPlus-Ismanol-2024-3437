@@ -27,5 +27,20 @@ namespace CombustiPlus
             cmbCombustible.SelectedIndex = 0;
             cmbPago.SelectedIndex = 0;
         }
+        //R3: validaciones con los  if
+        private bool Validar()
+        {
+            if (txtPlaca.Text.Trim().Length != 7)
+            {
+                MessageBox.Show("La placa debe tener 7 caracteres.");
+                return false;
+            }
+            if (nudGalones.Value <= 0)
+            {
+                MessageBox.Show("Los galones deben ser más de 0.");
+                return false;
+            }
+            return true;
+        }
     }
 }
