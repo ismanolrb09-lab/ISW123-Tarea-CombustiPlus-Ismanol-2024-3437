@@ -15,7 +15,7 @@ namespace CombustiPlus
         public string Pago { get; set; }
         public decimal Total { get; set; }
 
-    }
+    
      public override string ToString()
         {
             return "#" + Numero.ToString("00") + " | " + Placa + " | " + Combustible + " | "

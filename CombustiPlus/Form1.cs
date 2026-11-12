@@ -42,5 +42,27 @@ namespace CombustiPlus
             }
             return true;
         }
+
+        // R4:precio con un switch
+        private decimal PrecioPorGalon(string combustible)
+        {
+            decimal precio = 0m;
+
+            switch (combustible)
+            {
+                case "Premium":
+                 precio = 290.00m;
+                    break;
+
+                case "Regular":
+                 precio = 272.00m;
+                    break;
+
+                case "Gasoil":
+                 precio = 225.00m;
+                    break;
+            }
+                return precio;
+        }
     }
 }
