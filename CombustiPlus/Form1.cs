@@ -83,6 +83,33 @@ namespace CombustiPlus
             }
             decimal conDescuento = subtotal - descuento;
 
+            //Reglas 4 y 5 recargo 3% con tarjeta y despues del descuento
+            decimal recargo = 0m;
+            if (pago == "Tarjeta")
+            {
+                recargo = conDescuento * 0.03m;
+            }
+
+            decimal total = conDescuento + recargo;
+
+            lstDetalle.Items.Clear();
+            lstDetalle.Items.Add("Combustible: " + combustible + " a RD$ " + precio.ToString("N2") + " por galón");
+            lstDetalle.Items.Add("Galones: " + galones.ToString("N1"));
+            lstDetalle.Items.Add("Subtotal: RD$ " + subtotal.ToString("N2"));
+
+            if (galones >= 20) lstDetalle.Items.Add("Descuento 2%: - RD$ " + descuento.ToString("N2"));
+            else lstDetalle.Items.Add("Descuento: no aplica (menos de 20 galones)");
+
+            lstDetalle.Items.Add("Con descuento: RD$ " + conDescuento.ToString("N2"));
+
+            if (pago == "Tarjeta") lstDetalle.Items.Add("Recargo tarjeta 3%: + RD$ " + recargo.ToString("N2"));
+            else lstDetalle.Items.Add("Recargo: no aplica (efectivo)");
+
+            lstDetalle.Items.Add("TOTAL: RD$ " + total.ToString("N2"));
+
+            return total;
         }
+
     }
+
 }
