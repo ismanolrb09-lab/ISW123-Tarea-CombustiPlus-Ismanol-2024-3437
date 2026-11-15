@@ -109,7 +109,39 @@ namespace CombustiPlus
 
             return total;
         }
+        //R5
+        private void btnCotizar_Click(object sender, EventArgs e)
+        {
+            if (!Validar()) return;
 
+            decimal total = Calcular();
+
+            Despacho d = new Despacho();
+            d.Numero = despachos.Count + 1;
+            d.Placa = txtPlaca.Text;
+            d.Combustible = cmbCombustible.Text;
+            d.Combustible = cmbCombustible.Text;
+            d.Galones = nudGalones.Value;
+            d.Pago = cmbPago.Text;
+            d.Total = total;
+
+            despachos.Add(d);
+            lstDespachos.Items.Add(d.ToString());
+
+            ActualizarResumen();
+        }
+        private void ActualizarResumen()
+        {
+            decimal totalVendido = 0m;
+            decimal galonesTotales = 0m;
+            Despacho mayor = null;
+
+
+
+        }
+
+
+        }
     }
 
 }
