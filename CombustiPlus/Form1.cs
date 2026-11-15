@@ -51,18 +51,38 @@ namespace CombustiPlus
             switch (combustible)
             {
                 case "Premium":
-                 precio = 290.00m;
+                    precio = 290.00m;
                     break;
 
                 case "Regular":
-                 precio = 272.00m;
+                    precio = 272.00m;
                     break;
 
                 case "Gasoil":
-                 precio = 225.00m;
+                    precio = 225.00m;
                     break;
             }
-                return precio;
+            return precio;
+        }
+
+        //Calcula el total y muestra ssu paso a oaso en el lstDetalle
+        private decimal Calcular()
+        {
+            string combustible = cmbCombustible.Text;
+            string pago = cmbPago.Text;
+            decimal galones = nudGalones.Value;
+            decimal precio = PrecioPorGalon(combustible);
+
+            decimal subtotal = galones * precio;
+
+            // Regla 3 descuento 2% si son 20 galones o mas
+            decimal descuento = 0m;
+            if (galones >= 20)
+            {
+                descuento = subtotal * 0.02m;
+            }
+            decimal conDescuento = subtotal - descuento;
+
         }
     }
 }
