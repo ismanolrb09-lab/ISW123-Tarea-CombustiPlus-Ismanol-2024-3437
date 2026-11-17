@@ -112,23 +112,30 @@ namespace CombustiPlus
         //R5
         private void btnCotizar_Click(object sender, EventArgs e)
         {
-            if (!Validar()) return;
+            {
+                if (!Validar()) return;
+                Calcular();
+            }
+        }
+        private void btnDespachar_Click(object sender, EventArgs e)
+        {
+            
+                if (!Validar()) return;
 
-            decimal total = Calcular();
+                decimal total = Calcular();
 
-            Despacho d = new Despacho();
-            d.Numero = despachos.Count + 1;
-            d.Placa = txtPlaca.Text;
-            d.Combustible = cmbCombustible.Text;
-            d.Combustible = cmbCombustible.Text;
-            d.Galones = nudGalones.Value;
-            d.Pago = cmbPago.Text;
-            d.Total = total;
+                Despacho d = new Despacho();
+                d.Numero = despachos.Count + 1;
+                d.Placa = txtPlaca.Text;
+                d.Combustible = cmbCombustible.Text;
+                d.Galones = nudGalones.Value;
+                d.Pago = cmbPago.Text;
+                d.Total = total;
 
-            despachos.Add(d);
-            lstDespachos.Items.Add(d.ToString());
+                despachos.Add(d);
+                lstDespachos.Items.Add(d.ToString());
 
-            ActualizarResumen();
+                ActualizarResumen();
         }
         private void ActualizarResumen()
         {
@@ -136,9 +143,42 @@ namespace CombustiPlus
             decimal galonesTotales = 0m;
             Despacho mayor = null;
 
+            foreach (Despacho d in despachos)
+            {
+                totalVendido += d.Total;
+                galonesTotales += d.Galones;
 
+                if (mayor == null || d.Total > mayor.Total)
+                {
+                    mayor = d;
+                }
+            }
 
+            lblResumen.Text = despachos.Count + " despachos · Vendido RD$ " + totalVendido.ToString("N2")
+            + " · Galones " + galonesTotales.ToString("N1")
+            + " · Mayor: #" + mayor.Numero.ToString("00");
         }
 
+        private void btnPorCombustible_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, decimal> galonesPorCombustible = new Dictionary<string, decimal>();
+            galonesPorCombustible["Regular"] = 0;
+            galonesPorCombustible["Premium"] = 0;
+            galonesPorCombustible["Gasoil"] = 0;
+
+            foreach (Despacho d in despachos)
+            {
+                galonesPorCombustible[d.Combustible] += d.Galones;
+            }
+
+            lstDetalle.Items.Clear();
+            foreach (KeyValuePair<string, decimal> par in galonesPorCombustible)
+            {
+                lstDetalle.Items.Add(par.Key + " " + par.Value.ToString("N1"));
+            }
+        }
     }
 }
+
+
+
